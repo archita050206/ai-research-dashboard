@@ -10,6 +10,7 @@ const MainLayout = () => {
         <Link to='/'>Home</Link> | 
         <Link to='/search'>Search</Link> |
         <Link to='/favourites'>Favourites</Link> |
+        <Link to='/users'>Users</Link> 
         {user?(<>{user.name}</>):(<></>)}
     </nav>
     <main>

@@ -5,6 +5,8 @@ import Favourites from '../pages/Favourites'
 import Home from '../pages/Home'
 import Search from '../pages/Search'
 import Login from '../pages/Login'
+import Users from '../pages/Users'
+import Posts from '../pages/Posts'
 
 const AppRoutes = () => {
   return (
@@ -13,7 +15,8 @@ const AppRoutes = () => {
             <Route path='/' element={<Home/>}></Route>
             <Route path='/favourites' element={<Favourites/>}></Route>
             <Route path='/search' element={<Search/>}></Route>
-          
+            <Route path='/users' element={<Users/>}></Route>
+            <Route path='/posts' element={<Posts/>}></Route>
         </Route>
         <Route path='/login' element={<Login/>}></Route>
     </Routes>
