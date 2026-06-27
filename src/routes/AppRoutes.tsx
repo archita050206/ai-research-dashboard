@@ -7,7 +7,7 @@ import Login from '../pages/Login'
 import Users from '../pages/Users'
 import Posts from '../pages/Posts'
 import PaginationDemo from '../pages/PaginationDemo'
-import SearchDemo from '../pages/SearchDemo'
+import Search from '../pages/Search'
 
 const AppRoutes = () => {
   return (
@@ -15,7 +15,7 @@ const AppRoutes = () => {
         <Route element={<MainLayout/>}>
             <Route path='/' element={<Home/>}></Route>
             <Route path='/favourites' element={<Favourites/>}></Route>
-            <Route path='/search' element={<SearchDemo/>}></Route>
+            <Route path='/search' element={<Search/>}></Route>
             <Route path='/users' element={<Users/>}></Route>
             <Route path='/posts' element={<Posts/>}></Route>
             <Route path='/pagination' element={<PaginationDemo/>}></Route>
