@@ -21,7 +21,7 @@ const PaginationDemo = () => {
         totalPages,
         nextPage,
         prevPage,
-        goToPage}=usePagination(data??[],10);
+        goToPage}=usePagination(data??[],5);
     
     
     if(errors)return <h2>{errors}</h2>
@@ -43,8 +43,8 @@ const PaginationDemo = () => {
                 )
             )
         }
-        <button disabled={currentPg===1} onClick={()=>prevPage}>Prev</button>
-        <button disabled={currentPg===totalPages} onClick={()=>nextPage}>Next</button>
+        <button disabled={currentPg===1} onClick={prevPage}>Prev</button>
+        <button disabled={currentPg===totalPages} onClick={nextPage}>Next</button>
         </>
     )
 }
