@@ -1,19 +1,31 @@
-import { useState} from "react"
+import { usePagination } from "../hooks/usePagination"
+import useFetch from "../hooks/useFetch"
+import { getUsers } from "../services/userService"
+import type { User } from "../types/user"
 
 const PaginationDemo = () => {
-    const items = Array.from({ length: 100 }, (e, index) => ({
-        id: index + 1,
-        name: `Item ${index + 1}`
-    }))
-    const [currentPg, setcurrentPg] = useState(1)
-    const itemsPerPg=10;
+    
+    // const [currentPg, setcurrentPg] = useState(1)
+    // const itemsPerPg=10;
 
-    const startIndex=(currentPg-1)*itemsPerPg;
-    const endIndex=startIndex+itemsPerPg;
-    const currentItems=items.slice(startIndex,endIndex);
+    // const startIndex=(currentPg-1)*itemsPerPg;
+    // const endIndex=startIndex+itemsPerPg;
+    // const currentItems=items.slice(startIndex,endIndex);
 
-    const totalPages= Math.ceil(items.length/itemsPerPg);
+    // const totalPages= Math.ceil(items.length/itemsPerPg);
 
+    const {data, loading, errors}= useFetch<User[]>(getUsers); //-->can be used aw
+    //const data=useFetch<User[]>(getUsers);
+    const {currentPg,
+        currentItems,
+        totalPages,
+        nextPage,
+        prevPage,
+        goToPage}=usePagination(data??[],10);
+    
+    
+    if(errors)return <h2>{errors}</h2>
+    if(loading)return <h2>Loading...</h2>
     return (
         <>
         <h2>{totalPages}</h2>
@@ -27,12 +39,12 @@ const PaginationDemo = () => {
             Array.from(
                 {length: totalPages},
                 (ele,index)=>(
-                    <button key={index} onClick={()=>setcurrentPg(index+1)}>{index+1}</button>
+                    <button key={index} onClick={()=>goToPage(index+1)}>{index+1}</button>
                 )
             )
         }
-        <button disabled={currentPg===1} onClick={()=>setcurrentPg(currentPg-1)}>Prev</button>
-        <button disabled={currentPg===totalPages} onClick={()=>setcurrentPg(currentPg+1)}>Next</button>
+        <button disabled={currentPg===1} onClick={()=>prevPage}>Prev</button>
+        <button disabled={currentPg===totalPages} onClick={()=>nextPage}>Next</button>
         </>
     )
 }

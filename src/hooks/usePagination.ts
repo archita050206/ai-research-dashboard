@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 export function usePagination<T>(
     data:T[],
     itemsPerPage: number
@@ -24,6 +26,7 @@ export function usePagination<T>(
         currentItems,
         totalPages,
         nextPage,
-        prevPage
+        prevPage,
+        goToPage
     }
 }
