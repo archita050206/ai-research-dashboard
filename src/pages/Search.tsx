@@ -2,6 +2,7 @@ import { useState,useEffect } from "react"
 import { useDebounce } from "../hooks/useDebounce"
 import type { Paper } from "../types/paper";
 import { getPapers } from "../services/paperService";
+import { useFavourites } from "../contexts/FavouritesContext";
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState("")
@@ -11,7 +12,7 @@ const Search = () => {
     const [data, setData] = useState<Paper[]>([])
     const [loading, setLoading] = useState(false)
     const [errors, setErrors] = useState("")
-
+  const {addFavourite}=useFavourites();
   useEffect(() => {
     async function fetchPapers(){
       try{
@@ -40,13 +41,14 @@ const Search = () => {
     <div>
       <input type="text" value={searchTerm} onChange={(e)=>setSearchTerm(e.target.value)}/>
       {loading && <h2>Loading...</h2>}
-      {(data.length<=0)&& <h2>No match found!</h2>}
+      {/* {(data.length<=0)&& <h2>No match found!</h2>} */}
       {data?.map((ele)=>(
         <div key={ele.id}>
         <p>{ele.display_name}</p>
         <p>{ele.publication_year}</p>
+        <button onClick={()=>addFavourite(ele)}>❤️</button>
         <br />
-        </div>
+        </div>  
       ))}
       <button onClick={()=>setPage((prev)=>prev+1)}>Next</button>
       <button onClick={()=>setPage((prev)=>prev-1)}>Prev</button>

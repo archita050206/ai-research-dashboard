@@ -19,6 +19,7 @@ const AppRoutes = () => {
             <Route path='/users' element={<Users/>}></Route>
             <Route path='/posts' element={<Posts/>}></Route>
             <Route path='/pagination' element={<PaginationDemo/>}></Route>
+            <Route path='/favourites' element={<Favourites/>}></Route>
         </Route>
         <Route path='/login' element={<Login/>}></Route>
     </Routes>
