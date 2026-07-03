@@ -8,6 +8,7 @@ import Users from '../pages/Users'
 import Posts from '../pages/Posts'
 import PaginationDemo from '../pages/PaginationDemo'
 import Search from '../pages/Search'
+import Papers from '../pages/Papers'
 
 const AppRoutes = () => {
   return (
@@ -20,6 +21,7 @@ const AppRoutes = () => {
             <Route path='/posts' element={<Posts/>}></Route>
             <Route path='/pagination' element={<PaginationDemo/>}></Route>
             <Route path='/favourites' element={<Favourites/>}></Route>
+            <Route path='/papers' element={<Papers/>}></Route>
         </Route>
         <Route path='/login' element={<Login/>}></Route>
     </Routes>
