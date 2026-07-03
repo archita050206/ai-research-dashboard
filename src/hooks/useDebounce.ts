@@ -10,7 +10,7 @@ export function useDebounce<T>(
         setDebouncedValue(value)
       }, delay);
       return ()=>{
-        clearInterval(timer);
+        clearTimeout(timer);
       }
     }, [value,delay]);
     

@@ -7,18 +7,24 @@ import { useFavourites } from "../contexts/FavouritesContext";
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState("")
   const query=useDebounce(searchTerm,500);//--> final word to search
-  const [page, setPage] = useState(1);
+  //const [page, setPage] = useState(1);
   //const {data,loading,errors}=useFetch<Paper[]>(getPapers(query));
     const [data, setData] = useState<Paper[]>([])
     const [loading, setLoading] = useState(false)
     const [errors, setErrors] = useState("")
   const {addFavourite}=useFavourites();
   useEffect(() => {
+     if(!query){
+    //  setData([]);
+
+      return;
+    }
     async function fetchPapers(){
+      console.log("Fetching papers")
       try{
           setLoading(true);
           setErrors("");
-          const res=await getPapers(query,page);
+          const res=await getPapers(query);
           setData(res);
 
       }
@@ -31,11 +37,10 @@ const Search = () => {
       }
     }
     fetchPapers();
-    console.log(page)
-  }, [query,page])
+    
+  }, [query])
   
 
-  if(errors)return <h2>{errors}</h2>
   
   return (
     <div>
@@ -50,8 +55,9 @@ const Search = () => {
         <br />
         </div>  
       ))}
-      <button onClick={()=>setPage((prev)=>prev+1)}>Next</button>
-      <button onClick={()=>setPage((prev)=>prev-1)}>Prev</button>
+      {errors && <h2>{errors}</h2>}
+      {/* <button onClick={()=>setPage((prev)=>prev+1)}>Next</button>
+      <button onClick={()=>setPage((prev)=>prev-1)}>Prev</button> */}
     </div>
 
   )
