@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react"
+import { useState,useEffect,useRef } from "react"
 import { useDebounce } from "../hooks/useDebounce"
 import type { Paper } from "../types/paper";
 import { getPapers } from "../services/paperService";
@@ -13,6 +13,8 @@ const Search = () => {
     const [loading, setLoading] = useState(false)
     const [errors, setErrors] = useState("")
   const {addFavourite}=useFavourites();
+  const workerRef=useRef<Worker|null>(null);
+
   useEffect(() => {
      if(!query){
     //  setData([]);
@@ -26,6 +28,8 @@ const Search = () => {
           setErrors("");
           const res=await getPapers(query);
           setData(res);
+         workerRef.current?.postMessage(res); 
+
 
       }
       catch{
@@ -38,7 +42,23 @@ const Search = () => {
     }
     fetchPapers();
     
-  }, [query])
+  }, [query]);
+
+  useEffect(() => {
+    workerRef.current=new Worker(
+      new URL("../workers/paperWorker.ts", import.meta.url),
+      {
+        type:"module"
+      }
+
+    );
+    workerRef.current.onmessage=(event)=>{
+      console.log(event.data)
+    }
+    return()=>{
+      workerRef.current?.terminate();
+    }
+  }, [])
   
 
   
