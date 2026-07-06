@@ -1,14 +1,19 @@
-import useFetch from "../hooks/useFetch";
+//import useFetch from "../hooks/useFetch";
 import { getUsers } from "../services/userService";
 import type { User } from "../types/user";
-
+import { useQuery } from "@tanstack/react-query";
 
 const Users = () => {
     // const [users, setUsers] = useState<User[]>([])
     // const [loading, setLoading] = useState(false)
     // const [errors, setErrors] = useState("")
 
-    const {data,loading,errors}= useFetch<User[]>(getUsers);
+    //const {data,loading,errors}= useFetch<User[]>(getUsers);
+    const {data, isLoading, error}= useQuery<User[], Error>({
+        queryKey: ["users"],
+        queryFn: getUsers,
+        staleTime: 1000*60
+    });
 
     // useEffect(() => {
     //   async function fetchUsers(){
@@ -28,13 +33,13 @@ const Users = () => {
     //   fetchUsers();
     // }, [])
     
-    if(errors){
+    if(error){
         return <h2>Users could not be fetched!</h2>
     }
   return (
     <>
-    {loading? (<><h1>Loading....</h1></>):(<>
-        <h1>Users 9836159153</h1>
+    {isLoading? (<><h1>Loading....</h1></>):(<>
+        
         {data?.map((ele)=>(
             <>
             <div key={ele.id}>
